@@ -22,49 +22,84 @@
         appId: "1:1049434507094:web:e9fdb60cc3b6bd483278f7",
         measurementId: "G-81G7QJFT9R"
       };
-  
+
       if (!firebase.apps.length) {
         firebase.initializeApp(firebaseConfig);
       }
-  
+
       const db = firebase.firestore();
       const blogContainer = document.getElementById('blogs');
-  
-      try {
-        const snapshot = await db.collection("blogs").orderBy("createdAt", "desc").get();
-  
-        if (snapshot.empty) {
-          blogContainer.innerHTML = "<p class='text-gray-300'>No blogs found.</p>";
+      const categoryFilter = document.getElementById('categoryFilter');
+
+      let allBlogs = [];
+
+      async function fetchBlogs() {
+        try {
+          const snapshot = await db.collection("blogs").orderBy("createdAt", "desc").get();
+          allBlogs = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+          renderBlogs("All");
+        } catch (error) {
+          console.error("Error fetching blogs:", error);
+          blogContainer.innerHTML = "<p class='text-red-400'>Failed to load blogs.</p>";
+        }
+      }
+
+      function renderBlogs(category) {
+        blogContainer.innerHTML = "";
+
+        const filtered = category === "All" ? allBlogs : allBlogs.filter(blog => blog.category === category);
+
+        if (filtered.length === 0) {
+          blogContainer.innerHTML = "<p class='text-gray-300'>No blogs found for this category.</p>";
           return;
         }
-  
-        snapshot.forEach(doc => {
-          const blog = doc.data();
-          const createdAt = blog.createdAt ? blog.createdAt.toDate().toLocaleDateString() : "Unknown date";
-          
-          // Create a temporary element to extract plain text from content safely
+
+        filtered.forEach(blog => {
+          const createdAt = blog.createdAt?.toDate ? blog.createdAt.toDate().toLocaleDateString() : "Unknown date";
           const tempDiv = document.createElement("div");
           tempDiv.innerHTML = blog.content || "";
           const plainText = tempDiv.textContent || tempDiv.innerText || "";
           const snippet = plainText.substring(0, 150);
-  
-          const blogHTML = `
-            <article class="bg-gray-900 bg-opacity-60 rounded-xl shadow-xl p-6 transition-transform transform hover:scale-105 hover:shadow-2xl duration-300">
+
+          blogContainer.innerHTML += `
+            <article class="bg-gray-900 bg-opacity-60 rounded-xl shadow-xl p-6">
               <h2 class="text-2xl font-bold text-white mb-2">${blog.title}</h2>
               <div class="flex items-center justify-between text-sm text-gray-400 mb-3">
                 <span class="italic">${blog.category}</span>
                 <span>🗓️ ${createdAt}</span>
               </div>
               <p class="text-gray-300 leading-relaxed mb-4">${snippet}...</p>
-              <a href="blog.html?id=${doc.id}" class="inline-block text-indigo-400 hover:text-white font-semibold hover:underline">Read More →</a>
+              <div class="flex items-center gap-4 mb-3 text-sm">
+                <button onclick="likeBlog('${blog.id}')" class="text-pink-400 hover:text-white">❤️ Like (${blog.likes || 0})</button>
+                <button onclick="shareBlog('${blog.id}')" class="text-blue-400 hover:text-white">📤 Share</button>
+                <a href="blog.html?id=${blog.id}" class="text-green-400 hover:text-white">💬 Comment</a>
+              </div>
+              <a href="blog.html?id=${blog.id}" class="text-indigo-400 hover:text-white font-semibold hover:underline">Read More →</a>
             </article>
           `;
-          blogContainer.innerHTML += blogHTML;
         });
-      } catch (error) {
-        console.error("Error fetching blogs:", error);
-        blogContainer.innerHTML = "<p class='text-red-400'>Failed to load blogs. Please try again later.</p>";
       }
+
+      categoryFilter.addEventListener("change", () => {
+        const selected = categoryFilter.value;
+        renderBlogs(selected);
+      });
+
+      // Moved outside render loop:
+      window.likeBlog = async function (blogId) {
+        const blogRef = firebase.firestore().collection("blogs").doc(blogId);
+        await blogRef.update({ likes: firebase.firestore.FieldValue.increment(1) });
+        fetchBlogs(); // Refresh to update likes
+      }
+
+      window.shareBlog = function (blogId) {
+        const blogUrl = `${location.origin}/blog.html?id=${blogId}`;
+        navigator.clipboard.writeText(blogUrl)
+          .then(() => alert("Blog link copied to clipboard!"))
+          .catch(err => alert("Failed to copy link"));
+      }
+
+      fetchBlogs();
     });
   </script>
 </head>
@@ -87,6 +122,18 @@
   <!-- Main Content -->
   <main class="max-w-5xl mx-auto px-4 py-12">
     <h2 class="text-4xl font-bold text-indigo-200 mb-10 border-b border-indigo-400 pb-3">📚 Recent Blogs</h2>
+    <div class="mb-6">
+      <label for="categoryFilter" class="block text-sm font-medium text-indigo-300 mb-2">Filter by Category</label>
+      <select id="categoryFilter" class="w-full md:w-64 px-3 py-2 rounded-lg bg-gray-800 text-white border border-indigo-400">
+        <option value="All">All</option>
+        <option value="Technology">Technology</option>
+        <option value="Health">Health</option>
+        <option value="Lifestyle">Lifestyle</option>
+        <option value="Education">Education</option>
+        <option value="Business">Business</option>
+        <option value="Other">Other</option>
+      </select>
+    </div>
     <div id="blogs" class="space-y-8"></div>
   </main>
 

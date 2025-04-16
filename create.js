@@ -7,6 +7,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const mediaUrlInput = document.getElementById("media-url");
   const uploadStatus = document.getElementById("upload-status");
 
+  // Cloudinary upload widget config
   const uploadWidget = cloudinary.createUploadWidget({
     cloudName: "dzegjqt9e",
     uploadPreset: "blog_site",
@@ -49,7 +50,9 @@ document.addEventListener("DOMContentLoaded", function () {
         mediaUrl: mediaUrl || "",
         youtubeUrl: youtubeUrl || "",
         imageUrl: imageUrl || "",
-        createdAt: serverTimestamp(), // <- Make sure this field gets set
+        createdAt: serverTimestamp(),
+        likes: 0,            // 👈 Initializes like count
+        comments: []         // 👈 Initializes comment array
       });
 
       alert("Blog created successfully!");
