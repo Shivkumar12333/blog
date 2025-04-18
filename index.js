@@ -9,7 +9,9 @@ import {
   startAfter,
   startAt
 } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-firestore.js";
+import "path/to/cool-cats-animation.css"; // Add path to your cool cats animation CSS/JS
 
+// Firebase config
 const firebaseConfig = {
   apiKey: "AIzaSyAFJcSrPvrEq5lJVBtl2mhsQb84msmUb9s",
   authDomain: "bolg3-8e3a0.firebaseapp.com",
@@ -29,24 +31,26 @@ let lastVisible = null;
 let firstVisible = null;
 let prevStack = [];
 
+// Create pagination buttons
 const nextBtn = document.createElement("button");
 const prevBtn = document.createElement("button");
 
 nextBtn.textContent = "Next";
 prevBtn.textContent = "Previous";
-nextBtn.className = "read-more m-2 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700";
-prevBtn.className = "read-more m-2 px-4 py-2 bg-gray-600 text-white rounded hover:bg-gray-700";
+
+nextBtn.className = "mt-4 mx-2 px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700 transition";
+prevBtn.className = "mt-4 mx-2 px-4 py-2 bg-gray-600 text-white rounded hover:bg-gray-700 transition";
 prevBtn.disabled = true;
 
 const paginationDiv = document.createElement("div");
-paginationDiv.className = "text-center mt-6";
+paginationDiv.className = "text-center";
 paginationDiv.appendChild(prevBtn);
 paginationDiv.appendChild(nextBtn);
 blogList.insertAdjacentElement("afterend", paginationDiv);
 
 async function loadBlogs(direction = "forward") {
   try {
-    blogList.innerHTML = "<p class='text-gray-400'>Loading blogs...</p>";
+    blogList.innerHTML = "<p class='text-indigo-300'>Loading blogs...</p>";
 
     let q = query(collection(db, "blogs"), orderBy("createdAt", "desc"), limit(pageSize));
 
@@ -80,25 +84,29 @@ async function loadBlogs(direction = "forward") {
       const title = blog.title || "Untitled";
       const category = blog.category || "Uncategorized";
       const content = blog.content || "";
-      const snippet = content.length > 100 ? content.slice(0, 100) + "..." : content;
+      const snippet = content.length > 150 ? content.slice(0, 150) + "..." : content;
 
       let createdAt = "Unknown date";
       if (blog.createdAt?.toDate) {
         createdAt = blog.createdAt.toDate().toLocaleDateString();
       }
 
-      const blogCard = document.createElement("div");
-      blogCard.className = "bg-white p-6 rounded-lg shadow-md";
+      const blogCardContainer = document.createElement("div"); // Create a container for the blog card
+      const blogCard = document.createElement("article");
+      blogCard.classList.add("cat-wiggle"); // Add cat-wiggle class for animation
 
       blogCard.innerHTML = `
-        <h3 class="text-xl font-bold text-indigo-600">${title}</h3>
-        <p class="text-sm italic text-gray-500">${category}</p>
-        <p class="text-sm text-gray-400 mb-2">Published on: ${createdAt}</p>
-        <p class="text-gray-700 mb-2">${snippet}</p>
-        <a href="blog.html?id=${id}" class="text-blue-500 hover:underline">Read More</a>
+        <h3 class="text-2xl font-bold text-indigo-300 mb-2">${title}</h3>
+        <div class="flex items-center justify-between text-sm text-gray-400 mb-3">
+          <span class="italic">${category}</span>
+          <span>🗓️ ${createdAt}</span>
+        </div>
+        <p class="text-gray-200 mb-4 leading-relaxed">${snippet}</p>
+        <a href="blog.html?id=${id}" class="text-indigo-400 hover:text-white font-medium transition hover:underline">Read More →</a>
       `;
 
-      blogList.appendChild(blogCard);
+      blogCardContainer.appendChild(blogCard); // Append blogCard to the container
+      blogList.appendChild(blogCardContainer); // Append the container to blogList
     });
 
     prevBtn.disabled = prevStack.length <= 1;
@@ -106,7 +114,7 @@ async function loadBlogs(direction = "forward") {
 
   } catch (error) {
     console.error("Error fetching blogs:", error);
-    blogList.innerHTML = `<p class="text-red-500">Failed to load blogs. Try again later.</p>`;
+    blogList.innerHTML = `<p class="text-red-500">❌ Failed to load blogs. Try again later.</p>`;
   }
 }
 

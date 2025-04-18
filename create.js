@@ -18,10 +18,12 @@ document.addEventListener("DOMContentLoaded", function () {
   }, (error, result) => {
     if (!error && result && result.event === "success") {
       mediaUrlInput.value = result.info.secure_url;
-      uploadStatus.textContent = "Upload successful!";
+      uploadStatus.textContent = "✅ Upload successful!";
+      uploadStatus.className = "text-green-400 mt-2";
     } else if (error) {
       console.error("Upload error:", error);
-      uploadStatus.textContent = "Upload failed.";
+      uploadStatus.textContent = "❌ Upload failed.";
+      uploadStatus.className = "text-red-400 mt-2";
     }
   });
 
@@ -38,7 +40,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const imageUrl = document.getElementById("image-url").value.trim();
 
     if (!title || !category || !content) {
-      alert("Title, category, and content are required!");
+      alert("🚫 Title, category, and content are required!");
       return;
     }
 
@@ -51,16 +53,16 @@ document.addEventListener("DOMContentLoaded", function () {
         youtubeUrl: youtubeUrl || "",
         imageUrl: imageUrl || "",
         createdAt: serverTimestamp(),
-        likes: 0,            // 👈 Initializes like count
-        comments: []         // 👈 Initializes comment array
+        likes: 0,
+        comments: []
       });
 
-      alert("Blog created successfully!");
+      alert("🎉 Blog created successfully!");
       blogForm.reset();
       window.location.href = "index.html";
     } catch (error) {
       console.error("Error creating blog:", error);
-      alert("Failed to create blog. Try again.");
+      alert("❌ Failed to create blog. Try again.");
     }
   });
 });

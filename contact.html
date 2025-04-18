@@ -4,50 +4,56 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Contact - MyBlog</title>
-  <link rel="stylesheet" href="style.css">
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
   <script src="https://www.gstatic.com/firebasejs/10.13.1/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.13.1/firebase-firestore-compat.js"></script>
   <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-B6S56230L1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-B6S56230L1');
-</script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-B6S56230L1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-B6S56230L1');
+  </script>
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+  </style>
 </head>
-<body class="bg-gray-50 text-gray-800">
-  <header class="bg-indigo-700 text-white shadow-md py-6">
+<body class="bg-gradient-to-br from-gray-900 to-gray-800 text-gray-100">
+  <header class="bg-gray-900 text-white shadow-md py-6">
     <div class="max-w-7xl mx-auto px-4 flex justify-between items-center">
-      <h1 class="text-3xl font-bold">MyBlog</h1>
+      <h1 class="text-3xl font-extrabold text-indigo-400">MyBlog</h1>
       <nav class="space-x-6">
-        <a href="index.html" class="text-white hover:text-indigo-200">Home</a>
-        <a href="create.html" class="text-white hover:text-indigo-200">Write</a>
-        <a href="about.html" class="text-white hover:text-indigo-200">About</a>
-        <a href="contact.html" class="text-white hover:text-indigo-200">Contact</a>
+        <a href="index.html" class="text-gray-300 hover:text-white">Home</a>
+        <a href="create.html" class="text-gray-300 hover:text-white">Write</a>
+        <a href="about.html" class="text-gray-300 hover:text-white">About</a>
+        <a href="contact.html" class="text-gray-300 hover:text-white">Contact</a>
       </nav>
     </div>
   </header>
+
   <main class="max-w-4xl mx-auto px-6 py-12">
-    <h2 class="text-4xl font-semibold text-gray-800 mb-6">Contact Us</h2>
-    <p class="text-lg text-gray-600 leading-relaxed mb-8">
+    <h2 class="text-4xl font-bold text-indigo-300 mb-6">📬 Contact Us</h2>
+    <p class="text-lg text-gray-300 leading-relaxed mb-8">
       We’d love to hear from you! Whether you have a question, feedback, or just want to connect, feel free to reach out using the form below.
     </p>
-    <div class="bg-white p-6 rounded-lg shadow-md">
+    <div class="bg-gray-800 p-6 rounded-xl shadow-lg border border-gray-700">
       <form id="contact-form">
-        <div class="space-y-4">
+        <div class="space-y-6">
           <div>
-            <label for="name" class="block text-sm font-medium text-gray-700">Your Name</label>
-            <input type="text" id="name" name="name" class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500" required>
+            <label for="name" class="block text-sm font-medium text-indigo-200">Your Name</label>
+            <input type="text" id="name" name="name" class="w-full bg-gray-900 text-white border border-gray-600 rounded-lg px-4 py-2 focus:ring-indigo-500 focus:border-indigo-500" required>
           </div>
           <div>
-            <label for="email" class="block text-sm font-medium text-gray-700">Your Email</label>
-            <input type="email" id="email" name="email" class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500" required>
+            <label for="email" class="block text-sm font-medium text-indigo-200">Your Email</label>
+            <input type="email" id="email" name="email" class="w-full bg-gray-900 text-white border border-gray-600 rounded-lg px-4 py-2 focus:ring-indigo-500 focus:border-indigo-500" required>
           </div>
           <div>
-            <label for="message" class="block text-sm font-medium text-gray-700">Your Message</label>
-            <textarea id="message" name="message" rows="4" class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500" required></textarea>
+            <label for="message" class="block text-sm font-medium text-indigo-200">Your Message</label>
+            <textarea id="message" name="message" rows="4" class="w-full bg-gray-900 text-white border border-gray-600 rounded-lg px-4 py-2 focus:ring-indigo-500 focus:border-indigo-500" required></textarea>
           </div>
           <button type="submit" class="w-full bg-indigo-600 text-white py-2 px-4 rounded-lg shadow hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500">
             Send Message
@@ -56,23 +62,23 @@
       </form>
     </div>
   </main>
-  <footer class="bg-indigo-700 text-white text-center py-6">
+
+  <footer class="bg-gray-900 text-gray-400 text-center py-6">
     <p>&copy; 2025 MyBlog. All rights reserved.</p>
   </footer>
 
   <script>
     // Firebase Configuration
     const firebaseConfig = {
-  apiKey: "AIzaSyAFJcSrPvrEq5lJVBtl2mhsQb84msmUb9s",
-  authDomain: "bolg3-8e3a0.firebaseapp.com",
-  projectId: "bolg3-8e3a0",
-  storageBucket: "bolg3-8e3a0.firebasestorage.app",
-  messagingSenderId: "1049434507094",
-  appId: "1:1049434507094:web:e9fdb60cc3b6bd483278f7",
-  measurementId: "G-81G7QJFT9R"
-};
+      apiKey: "AIzaSyAFJcSrPvrEq5lJVBtl2mhsQb84msmUb9s",
+      authDomain: "bolg3-8e3a0.firebaseapp.com",
+      projectId: "bolg3-8e3a0",
+      storageBucket: "bolg3-8e3a0.firebasestorage.app",
+      messagingSenderId: "1049434507094",
+      appId: "1:1049434507094:web:e9fdb60cc3b6bd483278f7",
+      measurementId: "G-81G7QJFT9R"
+    };
 
-    // Initialize Firebase
     if (!firebase.apps.length) {
       firebase.initializeApp(firebaseConfig);
     } else {
@@ -80,37 +86,34 @@
     }
 
     const db = firebase.firestore();
-
-    // Contact Form Submission
     const form = document.getElementById("contact-form");
 
     form.addEventListener("submit", async (e) => {
-  e.preventDefault();
-  console.log("Form submitted!"); // This will log when the form is submitted.
+      e.preventDefault();
 
-  const name = document.getElementById("name").value.trim();
-  const email = document.getElementById("email").value.trim();
-  const message = document.getElementById("message").value.trim();
+      const name = document.getElementById("name").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const message = document.getElementById("message").value.trim();
 
-  if (!name || !email || !message) {
-    alert("Please fill in all fields.");
-    return;
-  }
+      if (!name || !email || !message) {
+        alert("Please fill in all fields.");
+        return;
+      }
 
-  try {
-    await db.collection("contactMessages").add({
-      name,
-      email,
-      message,
-      timestamp: firebase.firestore.FieldValue.serverTimestamp()
+      try {
+        await db.collection("contactMessages").add({
+          name,
+          email,
+          message,
+          timestamp: firebase.firestore.FieldValue.serverTimestamp()
+        });
+        alert("✅ Your message has been sent successfully!");
+        form.reset();
+      } catch (error) {
+        console.error("Error submitting message:", error);
+        alert("❌ Something went wrong. Please try again later.");
+      }
     });
-    alert("Your message has been sent successfully!");
-    form.reset();
-  } catch (error) {
-    console.error("Error submitting message:", error);
-    alert("Something went wrong. Please try again later.");
-  }
-});
   </script>
 </body>
 </html>

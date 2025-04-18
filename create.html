@@ -5,41 +5,48 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Create Blog - MyBlog</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
   <script src="https://widget.cloudinary.com/v2.0/global/all.js" type="text/javascript"></script>
-  <script type="module" src="./create.js" defer></script> <!-- Link to external create.js -->
+  <script type="module" src="./create.js" defer></script>
   <script type="module" src="auth-check.js" defer></script>
   <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-B6S56230L1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-B6S56230L1');
-</script>
- 
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-B6S56230L1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-B6S56230L1');
+  </script>
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+  </style>
 </head>
-<body class="bg-gray-100 text-gray-800">
-  <header class="bg-white shadow-md py-4">
+<body class="bg-gradient-to-br from-gray-900 to-gray-800 text-gray-100">
+  <header class="bg-gray-900 shadow-md py-4">
     <div class="max-w-7xl mx-auto px-4 flex justify-between items-center">
-      <h1 class="text-2xl font-bold text-indigo-600">MyBlog</h1>
+      <h1 class="text-5xl font-extrabold font-logo text-white tracking-widest">
+        DEEP<span class="text-pink-400">sink</span>
+      
+      </h1>
       <nav class="space-x-4">
-        <a href="index.html" class="text-gray-600 hover:text-indigo-600">Home</a>
-        <a href="about.html" class="text-gray-600 hover:text-indigo-600">About</a>
+        <a href="index.html" class="text-gray-300 hover:text-white font-medium transition">Home</a>
+        <a href="about.html" class="text-gray-300 hover:text-white font-medium transition">About</a>
       </nav>
     </div>
   </header>
 
-  <main class="max-w-3xl mx-auto p-6 mt-8 bg-white rounded-lg shadow">
-    <h2 class="text-2xl font-semibold text-gray-700 mb-6">Write a New Blog</h2>
-    <form id="blog-form" class="space-y-4">
+  <main class="max-w-3xl mx-auto p-6 mt-8 bg-gray-800 border border-gray-700 rounded-xl shadow-xl">
+    <h2 class="text-3xl font-bold text-indigo-300 mb-6">📝 Write a New Blog</h2>
+    <form id="blog-form" class="space-y-6">
       <div>
-        <label for="title" class="block text-sm font-medium text-gray-700">Title</label>
-        <input type="text" id="title" name="title" class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500" required>
+        <label for="title" class="block text-sm font-medium text-indigo-200">Title</label>
+        <input type="text" id="title" name="title" class="w-full bg-gray-900 text-white border-gray-600 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500" required>
       </div>
       <div>
-        <label for="category" class="block text-sm font-medium text-gray-700">Category</label>
-        <select id="category" name="category" class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500" required>
+        <label for="category" class="block text-sm font-medium text-indigo-200">Category</label>
+        <select id="category" name="category" class="w-full bg-gray-900 text-white border-gray-600 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500" required>
           <option value="">Select a category</option>
           <option value="Technology">Technology</option>
           <option value="news Editorial">news Editorial</option>
@@ -52,33 +59,33 @@
         </select>
       </div>
       <div>
-        <label for="content" class="block text-sm font-medium text-gray-700">Content</label>
-        <div class="border border-gray-300 rounded-lg shadow-sm p-2 bg-gray-50" id="content" contenteditable="true" style="min-height: 150px;"></div>
+        <label for="content" class="block text-sm font-medium text-indigo-200">Content</label>
+        <div class="border border-gray-600 rounded-lg shadow-sm p-3 bg-gray-900 text-white" id="content" contenteditable="true" style="min-height: 150px;"></div>
         <div class="mt-2 flex space-x-2">
-          <button type="button" id="bold-btn" class="px-2 py-1 bg-gray-200 rounded hover:bg-gray-300">Bold</button>
-          <button type="button" id="italic-btn" class="px-2 py-1 bg-gray-200 rounded hover:bg-gray-300">Italic</button>
-          <button type="button" id="underline-btn" class="px-2 py-1 bg-gray-200 rounded hover:bg-gray-300">Underline</button>
-          <input type="color" id="color-picker" class="w-10 h-10 border rounded">
+          <button type="button" id="bold-btn" class="px-3 py-1 bg-gray-700 text-white rounded hover:bg-gray-600">Bold</button>
+          <button type="button" id="italic-btn" class="px-3 py-1 bg-gray-700 text-white rounded hover:bg-gray-600">Italic</button>
+          <button type="button" id="underline-btn" class="px-3 py-1 bg-gray-700 text-white rounded hover:bg-gray-600">Underline</button>
+          <input type="color" id="color-picker" class="w-10 h-10 border border-gray-600 rounded">
         </div>
       </div>
       <div>
-        <label class="block text-sm font-medium text-gray-700">Upload Media</label>
+        <label class="block text-sm font-medium text-indigo-200">Upload Media</label>
         <button id="upload-widget" type="button" class="px-4 py-2 bg-indigo-600 text-white rounded-lg shadow hover:bg-indigo-700">
           Upload Media
         </button>
         <input type="hidden" id="media-url" name="mediaUrl">
-        <p id="upload-status" class="text-sm text-gray-500 mt-2"></p>
+        <p id="upload-status" class="text-sm text-gray-400 mt-2"></p>
       </div>
       <div>
-        <label for="youtube-url" class="block text-sm font-medium text-gray-700">YouTube URL (Optional)</label>
-        <input type="url" id="youtube-url" name="youtubeUrl" class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
+        <label for="youtube-url" class="block text-sm font-medium text-indigo-200">YouTube URL (Optional)</label>
+        <input type="url" id="youtube-url" name="youtubeUrl" class="w-full bg-gray-900 text-white border-gray-600 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
       </div>
       <div>
-        <label for="image-url" class="block text-sm font-medium text-gray-700">Image URL (Optional)</label>
-        <input type="url" id="image-url" name="imageUrl" class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
+        <label for="image-url" class="block text-sm font-medium text-indigo-200">Image URL (Optional)</label>
+        <input type="url" id="image-url" name="imageUrl" class="w-full bg-gray-900 text-white border-gray-600 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
       </div>
       <button type="submit" class="w-full bg-indigo-600 text-white py-2 px-4 rounded-lg shadow hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500">
-        Publish Blog
+        🚀 Publish Blog
       </button>
     </form>
   </main>

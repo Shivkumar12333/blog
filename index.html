@@ -3,18 +3,20 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>My Blog - Home</title>
+  <title>DEEPsink - Home</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-B6S56230L1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+  
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-B6S56230L1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-B6S56230L1');
+  </script>
 
-  gtag('config', 'G-B6S56230L1');
-</script>
   <!-- Firebase -->
   <script src="https://www.gstatic.com/firebasejs/10.13.1/firebase-app-compat.js" defer></script>
   <script src="https://www.gstatic.com/firebasejs/10.13.1/firebase-firestore-compat.js" defer></script>
@@ -54,6 +56,7 @@
 
       function renderBlogs(category) {
         blogContainer.innerHTML = "";
+        const animals = ['🐱', '🐶', '🦊', '🐻', '🐯', '🦁', '🐵', '🐰', '🐼', '🐸'];
 
         const filtered = category === "All" ? allBlogs : allBlogs.filter(blog => blog.category === category);
 
@@ -64,16 +67,18 @@
 
         filtered.forEach(blog => {
           const createdAt = blog.createdAt?.toDate ? blog.createdAt.toDate().toLocaleDateString() : "Unknown date";
+          const animalEmoji = animals[Math.floor(Math.random() * animals.length)];
           const tempDiv = document.createElement("div");
           tempDiv.innerHTML = blog.content || "";
           const plainText = tempDiv.textContent || tempDiv.innerText || "";
           const snippet = plainText.substring(0, 150);
 
           blogContainer.innerHTML += `
-            <article class="bg-gray-900 bg-opacity-60 rounded-xl shadow-xl p-6">
+          <article class="tilt-hover cat-wiggle blog-card-animated backdrop-blur-sm bg-gray-900 bg-opacity-40 rounded-xl shadow-xl p-6 transition-all transform hover:scale-105 hover:shadow-2xl hover:ring-2 hover:ring-indigo-500">
+              <div class="text-5xl text-center mb-2">${animalEmoji}</div>
               <h2 class="text-2xl font-bold text-white mb-2">${blog.title}</h2>
               <div class="flex items-center justify-between text-sm text-gray-400 mb-3">
-                <span class="italic">${blog.category}</span>
+                <span class="bg-indigo-600 text-white px-2 py-1 rounded-full text-xs">${blog.category}</span>
                 <span>🗓️ ${createdAt}</span>
               </div>
               <p class="text-gray-300 leading-relaxed mb-4">${snippet}...</p>
@@ -93,11 +98,10 @@
         renderBlogs(selected);
       });
 
-      // Moved outside render loop:
       window.likeBlog = async function (blogId) {
         const blogRef = firebase.firestore().collection("blogs").doc(blogId);
         await blogRef.update({ likes: firebase.firestore.FieldValue.increment(1) });
-        fetchBlogs(); // Refresh to update likes
+        fetchBlogs();
       }
 
       window.shareBlog = function (blogId) {
@@ -110,33 +114,81 @@
       fetchBlogs();
     });
   </script>
+  <style>
+    @keyframes slideIn {
+      0% {
+        transform: translateX(100%);
+      }
+      100% {
+        transform: translateX(-100%);
+      }
+    }
+  
+    .animate-slide {
+      display: inline-block;
+      white-space: nowrap;
+      animation: slideIn 12s linear infinite;
+    }
+
+    .tilt-hover {
+      perspective: 1000px;
+      transform-style: preserve-3d;
+      transition: transform 0.5s ease, box-shadow 0.3s ease;
+    }
+    .tilt-hover:hover {
+      transform: rotateX(8deg) rotateY(6deg) scale(1.05);
+      box-shadow: 0 20px 30px rgba(0, 0, 0, 0.25);
+    }
+  
+  @keyframes fadeInUp {
+    0% { opacity: 0; transform: translateY(30px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+
+  .blog-card-animated {
+    animation: fadeInUp 0.6s ease forwards;
+  }
+
+  @media (max-width: 640px) {
+    .cat-wiggle {
+      animation-duration: 1.2s;
+    }
+  }
+  </style>
 </head>
 
-<body class="bg-gray-900 text-white min-h-screen">
-
+<body class="bg-gray-900 text-white font-['Inter'] min-h-screen">
   <!-- Header -->
-  <header class="bg-gray-800 bg-opacity-80 shadow sticky top-0 z-10 backdrop-blur">
-    <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
-      <h1 class="text-3xl font-extrabold text-indigo-300">DEEPsink</h1>
-      <nav class="space-x-6">
+  <header class="bg-gray-800 bg-opacity-80 sticky top-0 z-50 shadow-lg backdrop-blur-md">
+    <div class="max-w-7xl mx-auto px-4 py-6 flex justify-between items-center">
+      <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold font-logo text-white tracking-widest">
+        DEEP<span class="text-pink-400">sink</span>
+      </h1>
+      <nav class="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-8 text-center sm:text-left">
         <a href="index.html" class="text-gray-300 hover:text-white font-medium transition">Home</a>
         <a href="create.html" class="text-gray-300 hover:text-white font-medium transition">Write</a>
         <a href="about.html" class="text-gray-300 hover:text-white font-medium transition">About</a>
         <a href="contact.html" class="text-gray-300 hover:text-white font-medium transition">Contact</a>
-        <a href="https://www.amazon.in" class="text-gray-300 hover:text-white font-medium transition">Shop now</a>
+        <a href="https://www.amazon.in" class="text-gray-300 hover:text-white font-medium transition">Shop Now</a>
       </nav>
     </div>
   </header>
 
   <!-- Main Content -->
-  <main class="max-w-5xl mx-auto px-4 py-12">
-    <h2 class="text-4xl font-bold text-indigo-200 mb-10 border-b border-indigo-400 pb-3">📚 Recent Blogs</h2>
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 py-12">
+    <section class="mb-10 text-center relative overflow-hidden">
+      <div class="animate-slide text-3xl md:text-4xl font-extrabold bg-gradient-to-r from-pink-400 via-yellow-400 to-purple-500 bg-clip-text text-transparent whitespace-nowrap border-4 border-dashed border-pink-500 rounded-xl px-4 py-2 shadow-md animate-pulse">
+        ✨ Share your thoughts, your vibe, your POV — with the world on DEEPsink! 🌍
+      </div>
+    </section>
+    <h2 class="text-3xl sm:text-4xl font-bold text-indigo-200 mb-8 border-b border-indigo-400 pb-3">📚 Recent Blogs</h2>
+
     <div class="mb-6">
       <label for="categoryFilter" class="block text-sm font-medium text-indigo-300 mb-2">Filter by Category</label>
       <select id="categoryFilter" class="w-full md:w-64 px-3 py-2 rounded-lg bg-gray-800 text-white border border-indigo-400">
         <option value="All">All</option>
-        <option value="news editorial ">news editorial</option>
-        <option value="trend update">trend update</option>
+        <option value="news editorial">News Editorial</option>
+        <option value="trend update">Trend Update</option>
         <option value="Technology">Technology</option>
         <option value="Health">Health</option>
         <option value="Lifestyle">Lifestyle</option>
@@ -145,14 +197,22 @@
         <option value="Other">Other</option>
       </select>
     </div>
-    <div id="blogs" class="space-y-8"></div>
+
+    <div id="blogs" class="grid gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"></div>
   </main>
 
   <!-- Footer -->
   <footer class="bg-gray-800 border-t border-gray-700 mt-10">
     <div class="max-w-7xl mx-auto px-4 py-6 text-center text-sm text-gray-400">
-      &copy; 2025 MyBlog. All rights reserved.
+      &copy; 2025 DEEPsink. All rights reserved.
     </div>
   </footer>
+  <video autoplay loop muted playsinline class="hidden sm:block fixed top-0 left-0 w-full h-full object-cover z-[-1] opacity-5 pointer-events-none">
+    <source src="pink-cat.mp4" type="video/mp4" />
+    Your browser does not support the video tag.
+</video>
+  <a href="create.html" class="fixed bottom-6 right-6 bg-pink-500 text-white p-4 rounded-full shadow-lg hover:scale-110 transition z-50">
+    ✍️ Write
+  </a>
 </body>
 </html>

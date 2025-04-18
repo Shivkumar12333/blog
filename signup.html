@@ -3,85 +3,94 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign Up</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Sign Up - MyBlog</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-B6S56230L1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-B6S56230L1');
-</script>
-</head>
-<body>
-    <header>
-        <h1>Sign Up</h1>
-        <nav>
-            <a href="index.html">Home</a>
-            <a href="login.html">Login</a>
-        </nav>
-    </header>
-    <main>
-        <form id="signup-form">
-            <label for="name">Name:</label>
-            <input type="text" id="name" name="name" required>
-            <br>
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required>
-            <br>
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password" required>
-            <br>
-            <label for="confirm-password">Confirm Password:</label>
-            <input type="password" id="confirm-password" name="confirm-password" required>
-            <br>
-            <button type="submit">Sign Up</button>
-        </form>
-        <p>Already have an account? <a href="login.html">Login</a></p>
-    </main>
-    <script type="module">
-      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js";
-      import { getAuth, createUserWithEmailAndPassword, updateProfile } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-auth.js";
-
-      const firebaseConfig = {
-        apiKey: "AIzaSyAFJcSrPvrEq5lJVBtl2mhsQb84msmUb9s",
-        authDomain: "bolg3-8e3a0.firebaseapp.com",
-        projectId: "bolg3-8e3a0",
-        storageBucket: "bolg3-8e3a0.firebasestorage.app",
-        messagingSenderId: "1049434507094",
-        appId: "1:1049434507094:web:e9fdb60cc3b6bd483278f7",
-        measurementId: "G-81G7QJFT9R"
-      };
-
-      const app = initializeApp(firebaseConfig);
-      const auth = getAuth(app);
-
-      document.getElementById('signup-form').addEventListener('submit', async (e) => {
-        e.preventDefault();
-
-        const name = document.getElementById('name').value.trim();
-        const email = document.getElementById('email').value;
-        const password = document.getElementById('password').value;
-        const confirmPassword = document.getElementById('confirm-password').value;
-
-        if (password !== confirmPassword) {
-          alert("Passwords do not match!");
-          return;
-        }
-
-        try {
-          const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-          await updateProfile(userCredential.user, { displayName: name });
-
-          alert("Sign-up successful! You can now log in.");
-          window.location.href = "login.html";
-        } catch (error) {
-          console.error("Sign-up error:", error);
-          alert(`Error: ${error.message}`);
-        }
-      });
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-B6S56230L1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-B6S56230L1');
     </script>
+    <style>
+      body {
+        font-family: 'Inter', sans-serif;
+      }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-gray-900 to-gray-800 text-gray-100 min-h-screen flex items-center justify-center">
+  <main class="bg-gray-800 border border-gray-700 p-8 rounded-xl shadow-2xl w-full max-w-md">
+    <h1 class="text-3xl font-bold text-center text-indigo-400 mb-6">📝 Sign Up</h1>
+    <form id="signup-form" class="space-y-4">
+      <div>
+        <label for="name" class="block text-sm font-medium text-indigo-200">Name</label>
+        <input type="text" id="name" name="name" required class="w-full px-3 py-2 bg-gray-900 border border-gray-600 text-white rounded-lg focus:ring-indigo-500 focus:border-indigo-500">
+      </div>
+      <div>
+        <label for="email" class="block text-sm font-medium text-indigo-200">Email</label>
+        <input type="email" id="email" name="email" required class="w-full px-3 py-2 bg-gray-900 border border-gray-600 text-white rounded-lg focus:ring-indigo-500 focus:border-indigo-500">
+      </div>
+      <div>
+        <label for="password" class="block text-sm font-medium text-indigo-200">Password</label>
+        <input type="password" id="password" name="password" required class="w-full px-3 py-2 bg-gray-900 border border-gray-600 text-white rounded-lg focus:ring-indigo-500 focus:border-indigo-500">
+      </div>
+      <div>
+        <label for="confirm-password" class="block text-sm font-medium text-indigo-200">Confirm Password</label>
+        <input type="password" id="confirm-password" name="confirm-password" required class="w-full px-3 py-2 bg-gray-900 border border-gray-600 text-white rounded-lg focus:ring-indigo-500 focus:border-indigo-500">
+      </div>
+      <button type="submit" class="w-full py-2 bg-indigo-600 text-white font-semibold rounded-lg hover:bg-indigo-700 transition">
+        Sign Up
+      </button>
+    </form>
+    <p class="mt-4 text-center text-sm text-gray-300">
+      Already have an account?
+      <a href="login.html" class="text-indigo-400 hover:text-white font-medium transition">Login</a>
+    </p>
+  </main>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js";
+    import { getAuth, createUserWithEmailAndPassword, updateProfile } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-auth.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyAFJcSrPvrEq5lJVBtl2mhsQb84msmUb9s",
+      authDomain: "bolg3-8e3a0.firebaseapp.com",
+      projectId: "bolg3-8e3a0",
+      storageBucket: "bolg3-8e3a0.firebasestorage.app",
+      messagingSenderId: "1049434507094",
+      appId: "1:1049434507094:web:e9fdb60cc3b6bd483278f7",
+      measurementId: "G-81G7QJFT9R"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    document.getElementById('signup-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      const confirmPassword = document.getElementById('confirm-password').value;
+
+      if (password !== confirmPassword) {
+        alert("Passwords do not match!");
+        return;
+      }
+
+      try {
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        await updateProfile(userCredential.user, { displayName: name });
+
+        alert("🎉 Sign-up successful! You can now log in.");
+        window.location.href = "login.html";
+      } catch (error) {
+        console.error("Sign-up error:", error);
+        alert(`Error: ${error.message}`);
+      }
+    });
+  </script>
 </body>
 </html>
