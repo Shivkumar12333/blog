@@ -3,10 +3,26 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>DEEPsink - Home</title>
+  <meta name="theme-color" content="#00ff88">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="DEEPsink">
+  <link rel="manifest" href="manifest.json">
+  <title>DEEPsink - Modern Blog Platform</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="enhanced-features.css">
+  <link rel="stylesheet" href="mobile-responsive.css">
+  
+  <!-- Enhanced Features Scripts -->
+  <script src="theme-toggle.js"></script>
+  <script src="advanced-search.js"></script>
+  <script src="bookmark-system.js"></script>
+  <script src="stats-dashboard.js"></script>
+  <script src="random-chat.js"></script>
+  <script src="mobile-navigation.js"></script>
   
   <!-- Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-B6S56230L1"></script>
@@ -43,6 +59,82 @@
 
       let allBlogs = [];
 
+      // Enhanced blog rendering function
+      function renderBlogs(category) {
+        const blogContainer = document.getElementById('blogs');
+        blogContainer.innerHTML = "";
+        const animals = ['🐱', '🐶', '🦊', '🐻', '🐯', '🦁', '🐵', '🐰', '🐼', '🐸', '🦋', '🐺', '🐨', '🦘', '🦔'];
+
+        const filtered = category === "All" ? allBlogs : allBlogs.filter(blog => blog.category === category);
+
+        if (filtered.length === 0) {
+          blogContainer.innerHTML = `
+            <div class="col-span-full text-center py-12">
+              <div class="text-6xl mb-4">📝</div>
+              <h3 class="text-2xl font-semibold text-gray-300 mb-2">No blogs found</h3>
+              <p class="text-gray-500">Try selecting a different category or create your first blog!</p>
+            </div>
+          `;
+          return;
+        }
+
+        filtered.forEach((blog, index) => {
+          const createdAt = blog.createdAt?.toDate ? blog.createdAt.toDate().toLocaleDateString() : "Unknown date";
+          const animalEmoji = animals[Math.floor(Math.random() * animals.length)];
+          const tempDiv = document.createElement("div");
+          tempDiv.innerHTML = blog.content || "";
+          const plainText = tempDiv.textContent || tempDiv.innerText || "";
+          const snippet = plainText.substring(0, 180);
+
+          const blogCard = document.createElement('article');
+          blogCard.className = 'modern-card animate-fade-in';
+          blogCard.style.animationDelay = `${index * 0.1}s`;
+          
+          blogCard.innerHTML = `
+            <div class="animal-emoji">${animalEmoji}</div>
+            <h3 class="text-2xl font-bold text-white mb-3 line-clamp-2">${blog.title}</h3>
+            <div class="blog-meta">
+              <span class="blog-category">${blog.category}</span>
+              <span class="blog-date">
+                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path>
+                </svg>
+                ${createdAt}
+              </span>
+            </div>
+            <p class="text-gray-300 leading-relaxed mb-4">${snippet}${plainText.length > 180 ? '...' : ''}</p>
+            <div class="blog-actions">
+              <button onclick="likeBlog('${blog.id}')" class="blog-action">
+                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd"></path>
+                </svg>
+                ${blog.likes || 0}
+              </button>
+              <button onclick="shareBlog('${blog.id}')" class="blog-action">
+                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M15 8a3 3 0 10-2.977-2.63l-4.94 2.47a3 3 0 100 4.319l4.94 2.47a3 3 0 10.895-1.789l-4.94-2.47a3.027 3.027 0 000-.74l4.94-2.47C13.456 7.68 14.19 8 15 8z"></path>
+                </svg>
+                Share
+              </button>
+              <a href="blog.html?id=${blog.id}" class="blog-action">
+                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M18 10c0 3.866-3.582 7-8 7a8.841 8.841 0 01-4.083-.98L2 17l1.338-3.123C2.493 12.767 2 11.434 2 10c0-3.866 3.582-7 8-7s8 3.134 8 7zM7 9H5v2h2V9zm8 0h-2v2h2V9zM9 9h2v2H9V9z" clip-rule="evenodd"></path>
+                </svg>
+                Comment
+              </a>
+            </div>
+            <a href="blog.html?id=${blog.id}" class="read-more">
+              Read More
+              <svg class="w-4 h-4 transition-transform" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+              </svg>
+            </a>
+          `;
+          
+          blogContainer.appendChild(blogCard);
+        });
+      }
+
       async function fetchBlogs() {
         try {
           const snapshot = await db.collection("blogs").orderBy("createdAt", "desc").get();
@@ -50,47 +142,14 @@
           renderBlogs("All");
         } catch (error) {
           console.error("Error fetching blogs:", error);
-          blogContainer.innerHTML = "<p class='text-red-400'>Failed to load blogs.</p>";
-        }
-      }
-
-      function renderBlogs(category) {
-        blogContainer.innerHTML = "";
-        const animals = ['🐱', '🐶', '🦊', '🐻', '🐯', '🦁', '🐵', '🐰', '🐼', '🐸'];
-
-        const filtered = category === "All" ? allBlogs : allBlogs.filter(blog => blog.category === category);
-
-        if (filtered.length === 0) {
-          blogContainer.innerHTML = "<p class='text-gray-300'>No blogs found for this category.</p>";
-          return;
-        }
-
-        filtered.forEach(blog => {
-          const createdAt = blog.createdAt?.toDate ? blog.createdAt.toDate().toLocaleDateString() : "Unknown date";
-          const animalEmoji = animals[Math.floor(Math.random() * animals.length)];
-          const tempDiv = document.createElement("div");
-          tempDiv.innerHTML = blog.content || "";
-          const plainText = tempDiv.textContent || tempDiv.innerText || "";
-          const snippet = plainText.substring(0, 150);
-
-          blogContainer.innerHTML += `
-          <article class="tilt-hover cat-wiggle blog-card-animated backdrop-blur-sm bg-gray-900 bg-opacity-40 rounded-xl shadow-xl p-6 transition-all transform hover:scale-105 hover:shadow-2xl hover:ring-2 hover:ring-indigo-500">
-              <div class="text-5xl text-center mb-2">${animalEmoji}</div>
-              <h2 class="text-2xl font-bold text-white mb-2">${blog.title}</h2>
-              <div class="flex items-center justify-between text-sm text-gray-400 mb-3">
-                <span class="bg-indigo-600 text-white px-2 py-1 rounded-full text-xs">${blog.category}</span>
-                <span>🗓️ ${createdAt}</span>
-              </div>
-              <p class="text-gray-300 leading-relaxed mb-4">${snippet}...</p>
-              <div class="flex items-center gap-4 mb-3 text-sm">
-                <button onclick="likeBlog('${blog.id}')" class="text-pink-400 hover:text-white">❤️ Like (${blog.likes || 0})</button>
-                <button onclick="shareBlog('${blog.id}')" class="text-blue-400 hover:text-white">📤 Share</button>
-                <a href="blog.html?id=${blog.id}" class="text-green-400 hover:text-white">💬 Comment</a>
-              </div>
-              <a href="blog.html?id=${blog.id}" class="text-indigo-400 hover:text-white font-semibold hover:underline">Read More →</a>
-            </article>
+          blogContainer.innerHTML = `
+            <div class="col-span-full text-center py-12">
+              <div class="text-6xl mb-4">❌</div>
+              <h3 class="text-2xl font-semibold text-red-400 mb-2">Failed to load blogs</h3>
+              <p class="text-gray-500">Please try refreshing the page</p>
+            </div>
           `;
-        });
+        }
       }
 
       categoryFilter.addEventListener("change", () => {
@@ -99,94 +158,329 @@
       });
 
       window.likeBlog = async function (blogId) {
-        const blogRef = firebase.firestore().collection("blogs").doc(blogId);
-        await blogRef.update({ likes: firebase.firestore.FieldValue.increment(1) });
-        fetchBlogs();
+        try {
+          const blogRef = firebase.firestore().collection("blogs").doc(blogId);
+          await blogRef.update({ likes: firebase.firestore.FieldValue.increment(1) });
+          fetchBlogs();
+        } catch (error) {
+          console.error("Error liking blog:", error);
+        }
       }
 
       window.shareBlog = function (blogId) {
         const blogUrl = `${location.origin}/blog.html?id=${blogId}`;
-        navigator.clipboard.writeText(blogUrl)
-          .then(() => alert("Blog link copied to clipboard!"))
-          .catch(err => alert("Failed to copy link"));
+        if (navigator.share) {
+          navigator.share({
+            title: 'Check out this blog post',
+            url: blogUrl
+          });
+        } else {
+          navigator.clipboard.writeText(blogUrl)
+            .then(() => {
+              // Show a modern toast notification
+              const toast = document.createElement('div');
+              toast.className = 'fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-50';
+              toast.textContent = '✅ Link copied to clipboard!';
+              document.body.appendChild(toast);
+              setTimeout(() => toast.remove(), 3000);
+            })
+            .catch(err => {
+              console.error('Failed to copy link:', err);
+              alert("Failed to copy link");
+            });
+        }
       }
 
       fetchBlogs();
     });
   </script>
   <style>
-    @keyframes slideIn {
-      0% {
-        transform: translateX(100%);
-      }
-      100% {
-        transform: translateX(-100%);
-      }
+    .modern-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
     }
-  
-    .animate-slide {
+
+    .modern-card {
+      background: var(--secondary-bg, #111111);
+      border: 1px solid var(--border-color, #333333);
+      border-radius: 16px;
+      padding: 2rem;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .modern-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, #4facfe 0%, #00f2fe 100%);
+      transform: scaleX(0);
+      transition: transform 0.3s ease;
+    }
+
+    .modern-card:hover::before {
+      transform: scaleX(1);
+    }
+
+    .modern-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+      border-color: var(--accent-color, #00ff88);
+    }
+
+    .hero-banner {
+      background: linear-gradient(135deg, rgba(139, 92, 246, 0.1) 0%, rgba(236, 72, 153, 0.1) 100%);
+      border: 1px solid rgba(139, 92, 246, 0.3);
+      border-radius: 20px;
+      padding: 3rem 2rem;
+      text-align: center;
+      margin-bottom: 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-banner::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+      animation: shimmer 3s infinite;
+    }
+
+    @keyframes shimmer {
+      0% { left: -100%; }
+      100% { left: 100%; }
+    }
+
+    .category-filter {
+      background: var(--secondary-bg, #111111);
+      border: 1px solid var(--border-color, #333333);
+      border-radius: 12px;
+      padding: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .modern-select {
+      background: var(--accent-bg, #1a1a1a);
+      border: 1px solid var(--border-color, #333333);
+      border-radius: 8px;
+      padding: 0.75rem 1rem;
+      color: white;
+      font-size: 0.9rem;
+      transition: all 0.3s ease;
+    }
+
+    .modern-select:focus {
+      outline: none;
+      border-color: var(--accent-color, #00ff88);
+      box-shadow: 0 0 0 3px rgba(0, 255, 136, 0.1);
+    }
+
+    .floating-action {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 64px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      z-index: 1000;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    }
+
+    .floating-action:hover {
+      transform: scale(1.1);
+      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.4);
+    }
+
+    .section-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: white;
+      margin-bottom: 1rem;
+      position: relative;
       display: inline-block;
-      white-space: nowrap;
-      animation: slideIn 12s linear infinite;
     }
 
-    .tilt-hover {
-      perspective: 1000px;
-      transform-style: preserve-3d;
-      transition: transform 0.5s ease, box-shadow 0.3s ease;
+    .section-title::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 0;
+      width: 60px;
+      height: 3px;
+      background: linear-gradient(90deg, #4facfe 0%, #00f2fe 100%);
+      border-radius: 2px;
     }
-    .tilt-hover:hover {
-      transform: rotateX(8deg) rotateY(6deg) scale(1.05);
-      box-shadow: 0 20px 30px rgba(0, 0, 0, 0.25);
-    }
-  
-  @keyframes fadeInUp {
-    0% { opacity: 0; transform: translateY(30px); }
-    100% { opacity: 1; transform: translateY(0); }
-  }
 
-  .blog-card-animated {
-    animation: fadeInUp 0.6s ease forwards;
-  }
-
-  @media (max-width: 640px) {
-    .cat-wiggle {
-      animation-duration: 1.2s;
+    .blog-meta {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1rem;
+      font-size: 0.85rem;
     }
-  }
+
+    .blog-category {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 0.25rem 0.75rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 500;
+    }
+
+    .blog-date {
+      color: var(--text-muted, #666666);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .blog-actions {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border-color, #333333);
+    }
+
+    .blog-action {
+      background: none;
+      border: none;
+      color: var(--text-secondary, #b3b3b3);
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .blog-action:hover {
+      color: var(--accent-color, #00ff88);
+      transform: translateY(-1px);
+    }
+
+    .read-more {
+      color: var(--accent-color, #00ff88) !important;
+      text-decoration: none;
+      font-weight: 500;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.3s ease;
+    }
+
+    .read-more:hover {
+      gap: 1rem;
+    }
+
+    .animal-emoji {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      display: block;
+      text-align: center;
+      filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+    }
+
+    .cursor {
+      position: fixed;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: var(--accent-color, #00ff88);
+      pointer-events: none;
+      z-index: 9999;
+      mix-blend-mode: difference;
+      transition: transform 0.1s ease;
+    }
+
+    .cursor-follower {
+      position: fixed;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 2px solid var(--accent-color, #00ff88);
+      pointer-events: none;
+      z-index: 9998;
+      transition: transform 0.3s ease;
+    }
+
+    body {
+      cursor: none;
+    }
+
+    a, button {
+      cursor: none;
+    }
   </style>
 </head>
 
 <body class="bg-gray-900 text-white font-['Inter'] min-h-screen">
+  <!-- Custom Cursor -->
+  <div class="cursor"></div>
+  <div class="cursor-follower"></div>
+
   <!-- Header -->
-  <header class="bg-gray-800 bg-opacity-80 sticky top-0 z-50 shadow-lg backdrop-blur-md">
-    <div class="max-w-7xl mx-auto px-4 py-6 flex justify-between items-center">
-      <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold font-logo text-white tracking-widest">
-        DEEP<span class="text-pink-400">sink</span>
-      </h1>
-      <nav class="flex flex-wrap gap-x-6 gap-y-2 justify-center sm:justify-end items-center text-sm sm:text-base">
-        <a href="index.html" class="text-gray-300 hover:text-white font-medium transition">Home</a>
-        <a href="create.html" class="text-gray-300 hover:text-white font-medium transition">Write</a>
-        <a href="about.html" class="text-gray-300 hover:text-white font-medium transition">About</a>
-        <a href="contact.html" class="text-gray-300 hover:text-white font-medium transition">Contact</a>
-        <a href="https://www.amazon.in" class="text-gray-300 hover:text-white font-medium transition">Shop Now</a>
+  <header id="header" class="fixed top-0 left-0 right-0 z-50 bg-black bg-opacity-80 backdrop-blur-md border-b border-gray-800">
+    <div class="header-content max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+      <a href="index.html" class="logo text-3xl font-bold text-white">
+        DEEP<span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-green-400">sink</span>
+      </a>
+      <nav class="nav-menu flex gap-8">
+        <a href="index.html" class="nav-link text-gray-300 hover:text-white transition-colors">Home</a>
+        <a href="create.html" class="nav-link text-gray-300 hover:text-white transition-colors">Write</a>
+        <a href="about.html" class="nav-link text-gray-300 hover:text-white transition-colors">About</a>
+        <a href="contact.html" class="nav-link text-gray-300 hover:text-white transition-colors">Contact</a>
+        <a href="https://www.amazon.in" class="nav-link text-gray-300 hover:text-white transition-colors">Shop</a>
       </nav>
     </div>
   </header>
 
   <!-- Main Content -->
-  <main class="max-w-7xl mx-auto px-4 sm:px-6 py-12">
-    <section class="mt-4 mb-6 text-center relative overflow-hidden">
-      <div class="animate-slide text-xl sm:text-2xl md:text-4xl font-extrabold bg-gradient-to-r from-pink-400 via-yellow-400 to-purple-500 bg-clip-text text-transparent whitespace-nowrap border-2 sm:border-4 border-dashed border-pink-500 rounded-xl px-2 sm:px-4 py-1 sm:py-2 shadow-md animate-pulse">
-        ✨ Share your thoughts, your vibe, your POV — with the world on DEEPsink! 🌍
+  <main class="pt-24 max-w-7xl mx-auto px-6 py-12">
+    <!-- Hero Banner -->
+    <section class="hero-banner mb-12">
+      <div class="relative z-10">
+        <h1 class="text-4xl md:text-6xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-pink-400 via-purple-400 to-green-400">
+          Share Your Thoughts
+        </h1>
+        <p class="text-xl text-gray-300 mb-6">
+          Express your ideas, share your perspective, and connect with the world on DEEPsink
+        </p>
+        <a href="create.html" class="btn btn-primary inline-flex items-center gap-2 px-8 py-3 bg-gradient-to-r from-blue-500 to-green-500 rounded-lg font-semibold hover:scale-105 transition-transform">
+          ✨ Start Writing
+        </a>
       </div>
     </section>
-    <h2 class="text-2xl sm:text-3xl font-bold text-indigo-200 mb-6 border-b border-indigo-400 pb-2">📚 Recent Blogs</h2>
 
-    <div class="mb-6">
-      <label for="categoryFilter" class="block text-sm font-medium text-indigo-300 mb-2">Filter by Category</label>
-      <select id="categoryFilter" class="w-full md:w-64 px-3 py-2 rounded-lg bg-gray-800 text-white border border-indigo-400">
-        <option value="All">All</option>
+    <!-- Section Title -->
+    <h2 class="section-title mb-8">Latest Articles</h2>
+
+    <!-- Category Filter -->
+    <div class="category-filter mb-8">
+      <label for="categoryFilter" class="block text-sm font-medium text-gray-300 mb-3">Filter by Category</label>
+      <select id="categoryFilter" class="modern-select w-full md:w-64">
+        <option value="All">All Categories</option>
         <option value="news editorial">News Editorial</option>
         <option value="trend update">Trend Update</option>
         <option value="Technology">Technology</option>
@@ -198,21 +492,51 @@
       </select>
     </div>
 
-    <div id="blogs" class="grid gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"></div>
+    <!-- Blog Grid -->
+    <div id="blogs" class="modern-grid"></div>
   </main>
 
+  <!-- Floating Action Button -->
+  <a href="create.html" class="floating-action" aria-label="Write new blog">
+    ✍️
+  </a>
+
   <!-- Footer -->
-  <footer class="bg-gray-800 border-t border-gray-700 mt-10">
-    <div class="max-w-7xl mx-auto px-4 py-6 text-center text-sm text-gray-400">
-      &copy; 2025 DEEPsink. All rights reserved.
+  <footer class="bg-gray-800 border-t border-gray-700 mt-16">
+    <div class="max-w-7xl mx-auto px-6 py-8 text-center">
+      <p class="text-gray-400">&copy; 2025 DEEPsink. All rights reserved.</p>
     </div>
   </footer>
-  <video autoplay loop muted playsinline class="hidden sm:block fixed top-0 left-0 w-full h-full object-cover z-[-1] opacity-10 pointer-events-none">
+
+  <!-- Background Video -->
+  <video autoplay loop muted playsinline class="hidden sm:block fixed top-0 left-0 w-full h-full object-cover z-[-1] opacity-5 pointer-events-none">
     <source src="pink-cat.mp4" type="video/mp4" />
-    Your browser does not support the video tag.
-</video>
-  <a href="create.html" class="fixed bottom-6 right-6 bg-pink-500 text-white p-4 rounded-full shadow-lg hover:scale-110 transition z-50">
-    ✍️ Write
-  </a>
+  </video>
+
+  <script>
+    // Custom cursor
+    document.addEventListener('mousemove', (e) => {
+      const cursor = document.querySelector('.cursor');
+      const follower = document.querySelector('.cursor-follower');
+      
+      cursor.style.left = e.clientX + 'px';
+      cursor.style.top = e.clientY + 'px';
+      
+      setTimeout(() => {
+        follower.style.left = e.clientX + 'px';
+        follower.style.top = e.clientY + 'px';
+      }, 100);
+    });
+
+    // Header scroll effect
+    window.addEventListener('scroll', () => {
+      const header = document.getElementById('header');
+      if (window.scrollY > 50) {
+        header.classList.add('scrolled');
+      } else {
+        header.classList.remove('scrolled');
+      }
+    });
+  </script>
 </body>
 </html>

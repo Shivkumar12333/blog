@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mobile Test - DEEPsink</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="enhanced-features.css">
+    <link rel="stylesheet" href="mobile-responsive.css">
+    <script src="theme-toggle.js"></script>
+    <script src="random-chat.js"></script>
+    <script src="mobile-navigation.js"></script>
+</head>
+<body class="bg-gray-900 text-white font-['Inter'] min-h-screen">
+    <!-- Header -->
+    <header id="header" class="fixed top-0 left-0 right-0 z-50 bg-black bg-opacity-80 backdrop-blur-md border-b border-gray-800">
+        <div class="header-content max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="index.html" class="logo text-3xl font-bold text-white">
+                DEEP<span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-green-400">sink</span>
+            </a>
+            <nav class="nav-menu flex gap-8">
+                <a href="index.html" class="nav-link text-gray-300 hover:text-white transition-colors">Home</a>
+                <a href="create.html" class="nav-link text-gray-300 hover:text-white transition-colors">Write</a>
+                <a href="about.html" class="nav-link text-gray-300 hover:text-white transition-colors">About</a>
+                <a href="contact.html" class="nav-link text-gray-300 hover:text-white transition-colors">Contact</a>
+                <a href="https://www.amazon.in" class="nav-link text-gray-300 hover:text-white transition-colors">Shop</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="pt-24 max-w-7xl mx-auto px-6 py-12">
+        <!-- Hero Banner -->
+        <section class="hero-banner mb-12">
+            <div class="relative z-10">
+                <h1 class="text-4xl md:text-6xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-pink-400 via-purple-400 to-green-400">
+                    Mobile Test Page
+                </h1>
+                <p class="text-xl text-gray-300 mb-6">
+                    Testing responsive design and mobile functionality
+                </p>
+                <button class="btn btn-primary inline-flex items-center gap-2 px-8 py-3 bg-gradient-to-r from-blue-500 to-green-500 rounded-lg font-semibold hover:scale-105 transition-transform">
+                    ✨ Test Button
+                </button>
+            </div>
+        </section>
+
+        <!-- Test Cards -->
+        <section class="mb-12">
+            <h2 class="section-title mb-8">Mobile Cards Test</h2>
+            <div class="modern-grid">
+                <div class="modern-card">
+                    <div class="animal-emoji">🐱</div>
+                    <h3 class="text-2xl font-bold text-white mb-3">Mobile Card 1</h3>
+                    <div class="blog-meta">
+                        <span class="blog-category">Technology</span>
+                        <span class="blog-date">
+                            <i class="fas fa-calendar"></i>
+                            Jan 15, 2025
+                        </span>
+                    </div>
+                    <p class="text-gray-300 leading-relaxed mb-4">
+                        This is a test card to verify mobile responsiveness. It should adapt well to different screen sizes and orientations.
+                    </p>
+                    <div class="blog-actions">
+                        <button class="blog-action">
+                            <i class="fas fa-heart"></i> 42
+                        </button>
+                        <button class="blog-action">
+                            <i class="fas fa-share"></i> Share
+                        </button>
+                        <button class="blog-action">
+                            <i class="fas fa-comment"></i> Comment
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="modern-card">
+                    <div class="animal-emoji">🐶</div>
+                    <h3 class="text-2xl font-bold text-white mb-3">Mobile Card 2</h3>
+                    <div class="blog-meta">
+                        <span class="blog-category">Design</span>
+                        <span class="blog-date">
+                            <i class="fas fa-calendar"></i>
+                            Jan 16, 2025
+                        </span>
+                    </div>
+                    <p class="text-gray-300 leading-relaxed mb-4">
+                        Another test card with different content. The grid should be responsive and stack on mobile devices.
+                    </p>
+                    <div class="blog-actions">
+                        <button class="blog-action">
+                            <i class="fas fa-heart"></i> 28
+                        </button>
+                        <button class="blog-action">
+                            <i class="fas fa-share"></i> Share
+                        </button>
+                        <button class="blog-action">
+                            <i class="fas fa-comment"></i> Comment
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="modern-card">
+                    <div class="animal-emoji">🦊</div>
+                    <h3 class="text-2xl font-bold text-white mb-3">Mobile Card 3</h3>
+                    <div class="blog-meta">
+                        <span class="blog-category">Mobile</span>
+                        <span class="blog-date">
+                            <i class="fas fa-calendar"></i>
+                            Jan 17, 2025
+                        </span>
+                    </div>
+                    <p class="text-gray-300 leading-relaxed mb-4">
+                        Third test card to verify the responsive grid behavior. On mobile, these should stack vertically.
+                    </p>
+                    <div class="blog-actions">
+                        <button class="blog-action">
+                            <i class="fas fa-heart"></i> 35
+                        </button>
+                        <button class="blog-action">
+                            <i class="fas fa-share"></i> Share
+                        </button>
+                        <button class="blog-action">
+                            <i class="fas fa-comment"></i> Comment
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Test Form -->
+        <section class="mb-12">
+            <h2 class="section-title mb-8">Mobile Form Test</h2>
+            <div class="modern-form">
+                <form class="space-y-6">
+                    <div class="form-group">
+                        <label for="testName" class="block text-sm font-medium text-gray-300 mb-2">Name</label>
+                        <input type="text" id="testName" name="testName" class="form-input w-full p-3 bg-gray-800 border border-gray-700 rounded-lg text-white" placeholder="Enter your name" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="testEmail" class="block text-sm font-medium text-gray-300 mb-2">Email</label>
+                        <input type="email" id="testEmail" name="testEmail" class="form-input w-full p-3 bg-gray-800 border border-gray-700 rounded-lg text-white" placeholder="Enter your email" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="testMessage" class="block text-sm font-medium text-gray-300 mb-2">Message</label>
+                        <textarea id="testMessage" name="testMessage" rows="4" class="form-input w-full p-3 bg-gray-800 border border-gray-700 rounded-lg text-white" placeholder="Enter your message" required></textarea>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary w-full">
+                        Send Test Message
+                    </button>
+                </form>
+            </div>
+        </section>
+
+        <!-- Mobile Features Test -->
+        <section class="mb-12">
+            <h2 class="section-title mb-8">Mobile Features</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="modern-card">
+                    <h3 class="text-xl font-bold mb-4">Touch Gestures</h3>
+                    <ul class="space-y-2 text-gray-300">
+                        <li>• Swipe navigation</li>
+                        <li>• Touch-optimized buttons</li>
+                        <li>• Pinch to zoom support</li>
+                        <li>• Tap to interact</li>
+                    </ul>
+                </div>
+                
+                <div class="modern-card">
+                    <h3 class="text-xl font-bold mb-4">Responsive Design</h3>
+                    <ul class="space-y-2 text-gray-300">
+                        <li>• Mobile-first approach</li>
+                        <li>• Flexible grid system</li>
+                        <li>• Adaptive typography</li>
+                        <li>• Touch-friendly UI</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Test Buttons -->
+        <section class="mb-12">
+            <h2 class="section-title mb-8">Button Tests</h2>
+            <div class="flex flex-wrap gap-4">
+                <button class="btn btn-primary" onclick="MobileUtils.showMobileToast('Success message!', 'success')">
+                    Success Toast
+                </button>
+                <button class="btn btn-secondary bg-red-600 hover:bg-red-700" onclick="MobileUtils.showMobileToast('Error message!', 'error')">
+                    Error Toast
+                </button>
+                <button class="btn btn-secondary bg-blue-600 hover:bg-blue-700" onclick="MobileUtils.showMobileToast('Info message!', 'info')">
+                    Info Toast
+                </button>
+                <button class="btn btn-secondary bg-purple-600 hover:bg-purple-700" onclick="testMobileFeatures()">
+                    Test Mobile Features
+                </button>
+            </div>
+        </section>
+    </main>
+
+    <!-- Floating Action Buttons -->
+    <div class="floating-action">
+        <button class="action-btn bg-gradient-to-r from-blue-600 to-purple-600 text-white hover:from-blue-700 hover:to-purple-700" title="Back to Top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        <button class="action-btn bg-gradient-to-r from-green-600 to-blue-600 text-white hover:from-green-700 hover:to-blue-700" title="Test Feature" onclick="testMobileFeatures()">
+            <i class="fas fa-mobile-alt"></i>
+        </button>
+    </div>
+
+    <script>
+        function testMobileFeatures() {
+            const deviceInfo = {
+                isMobile: MobileUtils.isMobile(),
+                isTablet: MobileUtils.isTablet(),
+                isDesktop: MobileUtils.isDesktop(),
+                screenWidth: window.innerWidth,
+                screenHeight: window.innerHeight,
+                orientation: window.innerWidth > window.innerHeight ? 'landscape' : 'portrait'
+            };
+            
+            const message = `Device: ${deviceInfo.isMobile ? 'Mobile' : deviceInfo.isTablet ? 'Tablet' : 'Desktop'} (${deviceInfo.screenWidth}x${deviceInfo.screenHeight}, ${deviceInfo.orientation})`;
+            
+            MobileUtils.showMobileToast(message, 'info');
+        }
+        
+        // Test touch events
+        if ('ontouchstart' in window) {
+            console.log('✅ Touch events supported');
+        } else {
+            console.log('❌ Touch events not supported');
+        }
+        
+        // Test responsive breakpoints
+        function logBreakpoint() {
+            if (MobileUtils.isMobile()) {
+                console.log('📱 Mobile breakpoint active');
+            } else if (MobileUtils.isTablet()) {
+                console.log('📱 Tablet breakpoint active');
+            } else {
+                console.log('💻 Desktop breakpoint active');
+            }
+        }
+        
+        window.addEventListener('resize', logBreakpoint);
+        logBreakpoint();
+    </script>
+</body>
+</html>

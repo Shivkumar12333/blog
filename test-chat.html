@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Test</title>
+    <link rel="stylesheet" href="enhanced-features.css">
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1>Chat Test Page</h1>
+        </div>
+    </header>
+    
+    <div style="padding: 20px; text-align: center;">
+        <h2>Random Chat Test</h2>
+        <p>The random chat button should appear in the header above.</p>
+        <p>If you see it, click it to test the chat functionality.</p>
+    </div>
+    
+    <script src="random-chat.js"></script>
+    <script>
+        // Add some debugging
+        console.log('Test page loaded');
+        
+        // Check if the button is created
+        setTimeout(() => {
+            const button = document.querySelector('.random-chat-button');
+            if (button) {
+                console.log('✅ Chat button found!');
+            } else {
+                console.log('❌ Chat button not found');
+            }
+        }, 1000);
+    </script>
+</body>
+</html>
