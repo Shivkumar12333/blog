@@ -5,14 +5,17 @@
   /* Header Navigation */
   .header-content {
     padding: 1rem 1rem;
-    flex-direction: column;
+    flex-direction: row !important;
+    justify-content: space-between;
+    align-items: center;
     gap: 1rem;
+    position: relative;
   }
   
   .nav-menu {
     display: none;
     position: fixed;
-    top: 100%;
+    top: 80px;
     left: 0;
     right: 0;
     background: rgba(0, 0, 0, 0.95);
@@ -60,7 +63,27 @@
   /* Logo adjustments */
   .logo {
     font-size: 1.8rem !important;
-    text-align: center;
+    text-align: left;
+    flex: 1;
+  }
+  
+  /* Header content - keep horizontal layout */
+  .header-content {
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    min-height: 60px;
+  }
+  
+  /* Hide desktop nav, show mobile toggle */
+  .nav-menu {
+    display: none !important;
+  }
+  
+  .mobile-menu-toggle {
+    display: block !important;
+    order: 2;
   }
   
   /* Hero Section */
@@ -68,6 +91,13 @@
     padding: 2rem 1rem;
     margin-bottom: 2rem;
     border-radius: 15px;
+    margin-top: 1rem;
+  }
+  
+  /* Main Content */
+  main {
+    padding: 1rem 1rem;
+    padding-top: 5rem; /* Account for fixed header */
   }
   
   .hero-banner h1 {
@@ -149,13 +179,27 @@
   /* Random Chat Button */
   .random-chat-button {
     position: fixed !important;
-    bottom: 5rem;
+    bottom: 1rem;
     right: 1rem;
     width: 56px;
     height: 56px;
     border-radius: 50%;
     padding: 0;
     z-index: 999;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  }
+  
+  .chat-button-wrapper {
+    position: fixed !important;
+    bottom: 1rem;
+    right: 1rem;
+    z-index: 999;
+  }
+  
+  .chat-button-wrapper .random-chat-button {
+    position: relative;
+    bottom: auto;
+    right: auto;
   }
   
   .chat-text {
@@ -168,7 +212,13 @@
   
   /* Chat Modal */
   .random-chat-modal {
-    padding: 0.5rem;
+    padding: 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1001;
   }
   
   .chat-modal-content {

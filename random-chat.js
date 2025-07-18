@@ -40,20 +40,29 @@ class RandomChatManager {
     
     chatButton.addEventListener('click', () => this.openChat());
     
-    // Add to header or create floating button
-    const header = document.querySelector('header .header-content');
-    if (header) {
-      // Create a wrapper for the button to fit with the header layout
-      const buttonWrapper = document.createElement('div');
-      buttonWrapper.className = 'chat-button-wrapper';
-      buttonWrapper.appendChild(chatButton);
-      header.appendChild(buttonWrapper);
-      console.log('✅ Random chat button added to header');
-    } else {
-      // Create floating button if header not found
+    // Check if mobile view
+    const isMobile = window.innerWidth <= 768;
+    
+    if (isMobile) {
+      // Always create floating button on mobile
       chatButton.classList.add('floating-chat-button');
       document.body.appendChild(chatButton);
-      console.log('⚠️ Header not found, created floating button');
+      console.log('✅ Random chat button added as floating button (mobile)');
+    } else {
+      // Add to header on desktop
+      const header = document.querySelector('header .header-content');
+      if (header) {
+        const buttonWrapper = document.createElement('div');
+        buttonWrapper.className = 'chat-button-wrapper';
+        buttonWrapper.appendChild(chatButton);
+        header.appendChild(buttonWrapper);
+        console.log('✅ Random chat button added to header (desktop)');
+      } else {
+        // Fallback to floating button
+        chatButton.classList.add('floating-chat-button');
+        document.body.appendChild(chatButton);
+        console.log('⚠️ Header not found, created floating button');
+      }
     }
   }
 
