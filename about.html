@@ -3,9 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>About - MyBlog</title>
+  <title>About - DEEPsink</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="enhanced-features.css">
+  <link rel="stylesheet" href="mobile-responsive.css">
+  <script src="theme-toggle.js"></script>
+  <script src="random-chat.js"></script>
+  <script src="mobile-navigation.js"></script>
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-B6S56230L1"></script>
   <script>
@@ -15,49 +22,275 @@
     gtag('config', 'G-B6S56230L1');
   </script>
   <style>
+    .about-hero {
+      background: linear-gradient(135deg, rgba(139, 92, 246, 0.1) 0%, rgba(236, 72, 153, 0.1) 100%);
+      border: 1px solid rgba(139, 92, 246, 0.3);
+      border-radius: 20px;
+      padding: 4rem 2rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .about-hero::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+      animation: shimmer 3s infinite;
+    }
+
+    @keyframes shimmer {
+      0% { left: -100%; }
+      100% { left: 100%; }
+    }
+
+    .feature-card {
+      background: var(--secondary-bg, #111111);
+      border: 1px solid var(--border-color, #333333);
+      border-radius: 16px;
+      padding: 2rem;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .feature-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, #4facfe 0%, #00f2fe 100%);
+      transform: scaleX(0);
+      transition: transform 0.3s ease;
+    }
+
+    .feature-card:hover::before {
+      transform: scaleX(1);
+    }
+
+    .feature-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+      border-color: var(--accent-color, #00ff88);
+    }
+
+    .feature-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    .cursor {
+      position: fixed;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: var(--accent-color, #00ff88);
+      pointer-events: none;
+      z-index: 9999;
+      mix-blend-mode: difference;
+      transition: transform 0.1s ease;
+    }
+
+    .cursor-follower {
+      position: fixed;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 2px solid var(--accent-color, #00ff88);
+      pointer-events: none;
+      z-index: 9998;
+      transition: transform 0.3s ease;
+    }
+
     body {
-      font-family: 'Inter', sans-serif;
+      cursor: none;
+    }
+
+    .section-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: white;
+      margin-bottom: 1rem;
+      position: relative;
+      display: inline-block;
+    }
+
+    .section-title::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 0;
+      width: 60px;
+      height: 3px;
+      background: linear-gradient(90deg, #4facfe 0%, #00f2fe 100%);
+      border-radius: 2px;
     }
   </style>
 </head>
-<body class="bg-gradient-to-br from-gray-900 to-gray-800 text-gray-100">
-  <header class="bg-gray-900 text-white shadow-md py-6">
-    <div class="max-w-7xl mx-auto px-4 flex justify-between items-center">
-      <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold font-logo text-white tracking-widest">
-        DEEP<span class="text-pink-400">sink</span>
-      </h1>
-      <nav class="space-x-6">
-        <a href="index.html" class="text-gray-300 hover:text-white">Home</a>
+<body class="bg-gray-900 text-white font-['Inter'] min-h-screen">
+  <!-- Custom Cursor -->
+  <div class="cursor"></div>
+  <div class="cursor-follower"></div>
+
+  <!-- Header -->
+  <header class="fixed top-0 left-0 right-0 z-50 bg-black bg-opacity-80 backdrop-blur-md border-b border-gray-800">
+    <div class="header-content max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+      <a href="index.html" class="logo text-3xl font-bold text-white">
+        DEEP<span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-green-400">sink</span>
+      </a>
+      <nav class="nav-menu flex gap-8">
+        <a href="index.html" class="nav-link text-gray-300 hover:text-white transition-colors">Home</a>
         <a href="create.html" class="text-gray-300 hover:text-white">Write</a>
         <a href="about.html" class="text-gray-300 hover:text-white">About</a>
         <a href="contact.html" class="text-gray-300 hover:text-white">Contact</a>
       </nav>
     </div>
   </header>
-  <main class="max-w-4xl mx-auto px-6 py-12">
-    <h2 class="text-4xl font-bold text-indigo-300 mb-6">📖 About This Blog</h2>
-    <p class="text-lg text-gray-300 leading-relaxed mb-8">
-      Welcome to <strong class="text-indigo-300">MyBlog</strong>, a sleek and accessible platform where creativity meets simplicity. Built with <span class="font-medium text-indigo-200">HTML</span>, <span class="font-medium text-indigo-200">CSS</span>, <span class="font-medium text-indigo-200">JavaScript</span>, and <span class="font-medium text-indigo-200">Firebase Firestore</span>, this blog empowers anyone to share their voice with the world effortlessly.
-    </p>
-    <div class="bg-gray-800 border border-gray-700 p-6 rounded-xl shadow-lg">
-      <h3 class="text-2xl font-semibold text-indigo-300 mb-3">🎯 Our Purpose</h3>
-      <p class="text-gray-300 mb-6">
-        MyBlog exists to create a space where thoughts flow freely. Whether you're a writer, thinker, or explorer, this blog helps you focus on expressing ideas without distraction—simple, minimalist, powerful.
-      </p>
 
-      <h3 class="text-2xl font-semibold text-indigo-300 mb-3">✨ Features</h3>
-      <ul class="list-disc pl-6 text-gray-200 space-y-2">
-        <li>📝 Clean and easy blog editor</li>
-        <li>📂 Category-based organization and pagination</li>
-        <li>🖼️ Image, video, and YouTube media support</li>
-        <li>⚡ Real-time Firebase Firestore backend</li>
-        <li>💬 Likes and comments with authentication</li>
-        <li>🎨 Fully responsive, modern dark theme</li>
-      </ul>
-    </div>
+  <!-- Main Content -->
+  <main class="pt-24 max-w-7xl mx-auto px-6 py-12">
+    <!-- Hero Section -->
+    <section class="about-hero mb-16">
+      <div class="relative z-10">
+        <h1 class="text-5xl md:text-6xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400">
+          About DEEPsink
+        </h1>
+        <p class="text-xl md:text-2xl text-gray-300 mb-8 max-w-3xl mx-auto">
+          A modern platform where thoughts meet technology, and stories come to life
+        </p>
+        <div class="text-6xl mb-4">🌊</div>
+      </div>
+    </section>
+
+    <!-- Mission Section -->
+    <section class="mb-16">
+      <h2 class="section-title mb-8">Our Mission</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div class="feature-card">
+          <div class="feature-icon">🚀</div>
+          <h3 class="text-2xl font-semibold mb-4">Empower Creators</h3>
+          <p class="text-gray-300 leading-relaxed">
+            We believe every voice deserves to be heard. DEEPsink provides a platform where creators can share their unique perspectives, stories, and insights with a global audience.
+          </p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🌍</div>
+          <h3 class="text-2xl font-semibold mb-4">Connect Communities</h3>
+          <p class="text-gray-300 leading-relaxed">
+            Building bridges between diverse communities through meaningful conversations, shared experiences, and collaborative storytelling that transcends boundaries.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="mb-16">
+      <h2 class="section-title mb-8">What We Offer</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="feature-card">
+          <div class="feature-icon">✍️</div>
+          <h3 class="text-xl font-semibold mb-4">Rich Content Editor</h3>
+          <p class="text-gray-300">
+            Create beautiful, engaging content with our intuitive editor. Add media, format text, and bring your ideas to life.
+          </p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">📱</div>
+          <h3 class="text-xl font-semibold mb-4">Mobile-First Design</h3>
+          <p class="text-gray-300">
+            Seamlessly write and read on any device. Our responsive design ensures a perfect experience everywhere.
+          </p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">⚡</div>
+          <h3 class="text-xl font-semibold mb-4">Lightning Fast</h3>
+          <p class="text-gray-300">
+            Built with modern web technologies for instant loading and smooth interactions that keep readers engaged.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Technology Section -->
+    <section class="mb-16">
+      <h2 class="section-title mb-8">Built with Modern Tech</h2>
+      <div class="feature-card">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+          <div>
+            <h3 class="text-2xl font-semibold mb-4">Cutting-Edge Stack</h3>
+            <p class="text-gray-300 mb-6">
+              DEEPsink is built using the latest web technologies including Firebase for real-time data, 
+              modern CSS for stunning visuals, and progressive web app features for optimal performance.
+            </p>
+            <div class="flex flex-wrap gap-3">
+              <span class="px-3 py-1 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full text-sm">Firebase</span>
+              <span class="px-3 py-1 bg-gradient-to-r from-green-500 to-blue-500 rounded-full text-sm">JavaScript</span>
+              <span class="px-3 py-1 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full text-sm">CSS3</span>
+              <span class="px-3 py-1 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-full text-sm">HTML5</span>
+            </div>
+          </div>
+          <div class="text-center">
+            <div class="text-8xl mb-4">💻</div>
+            <p class="text-gray-400">Modern. Fast. Reliable.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="text-center">
+      <h2 class="section-title mb-8">Ready to Share Your Story?</h2>
+      <p class="text-xl text-gray-300 mb-8">
+        Join thousands of creators who are already sharing their thoughts and connecting with readers worldwide.
+      </p>
+      <a href="create.html" class="btn btn-primary inline-flex items-center gap-2 px-8 py-3 bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg font-semibold hover:scale-105 transition-transform">
+        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.293l-3-3a1 1 0 00-1.414 0l-3 3a1 1 0 001.414 1.414L9 9.414V13a1 1 0 102 0V9.414l1.293 1.293a1 1 0 001.414-1.414z" clip-rule="evenodd"></path>
+        </svg>
+        Start Writing Today
+      </a>
+    </section>
   </main>
-  <footer class="bg-gray-900 text-gray-400 text-center py-6">
-    <p>&copy; 2025 MyBlog. All rights reserved.</p>
+
+  <!-- Footer -->
+  <footer class="bg-gray-800 border-t border-gray-700 mt-16">
+    <div class="max-w-7xl mx-auto px-6 py-8 text-center">
+      <p class="text-gray-400">&copy; 2025 DEEPsink. All rights reserved.</p>
+    </div>
   </footer>
+
+  <script>
+    // Custom cursor
+    document.addEventListener('mousemove', (e) => {
+      const cursor = document.querySelector('.cursor');
+      const follower = document.querySelector('.cursor-follower');
+      
+      cursor.style.left = e.clientX + 'px';
+      cursor.style.top = e.clientY + 'px';
+      
+      setTimeout(() => {
+        follower.style.left = e.clientX + 'px';
+        follower.style.top = e.clientY + 'px';
+      }, 100);
+    });
+
+    // Header scroll effect
+    window.addEventListener('scroll', () => {
+      const header = document.querySelector('header');
+      if (window.scrollY > 50) {
+        header.classList.add('scrolled');
+      } else {
+        header.classList.remove('scrolled');
+      }
+    });
+  </script>
 </body>
 </html>
