@@ -12,9 +12,14 @@ class MobileNavigation {
   }
 
   createMobileMenuToggle() {
-    // Check if toggle already exists
-    if (document.querySelector('.mobile-menu-toggle')) return;
+    // Check if toggle already exists in HTML
+    const existingToggle = document.querySelector('.mobile-menu-toggle');
+    if (existingToggle) {
+      console.log('Mobile menu toggle already exists in HTML');
+      return;
+    }
 
+    // Only create if it doesn't exist
     const toggle = document.createElement('button');
     toggle.className = 'mobile-menu-toggle';
     toggle.setAttribute('aria-label', 'Toggle mobile menu');
@@ -26,10 +31,10 @@ class MobileNavigation {
       </span>
     `;
 
-    // Add to header
-    const header = document.querySelector('header');
-    if (header) {
-      header.appendChild(toggle);
+    // Add to header content
+    const headerContent = document.querySelector('.header-content');
+    if (headerContent) {
+      headerContent.appendChild(toggle);
     }
   }
 

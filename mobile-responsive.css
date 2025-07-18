@@ -1,5 +1,90 @@
 /* Mobile-First Responsive Design for Blog */
 
+/* Enhanced Mobile Styles - All Mobile Devices */
+@media (max-width: 768px) {
+  /* Header Navigation - Force horizontal layout */
+  .header-content {
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    padding: 1rem 1rem !important;
+    gap: 1rem !important;
+    position: relative !important;
+    min-height: 70px !important;
+    flex-wrap: nowrap !important;
+    width: 100% !important;
+  }
+  
+  /* Logo - prevent shrinking */
+  .logo {
+    font-size: 1.5rem !important;
+    text-align: left !important;
+    flex: 1 1 auto !important;
+    flex-shrink: 0 !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+  }
+  
+  /* Desktop nav menu - hide on mobile */
+  .nav-menu {
+    position: fixed !important;
+    top: 70px !important;
+    left: -100% !important;
+    width: 100% !important;
+    height: calc(100vh - 70px) !important;
+    background: rgba(0, 0, 0, 0.95) !important;
+    backdrop-filter: blur(10px) !important;
+    flex-direction: column !important;
+    justify-content: flex-start !important;
+    align-items: center !important;
+    padding: 2rem 0 !important;
+    transition: left 0.3s ease !important;
+    z-index: 999 !important;
+    display: flex !important;
+  }
+  
+  .nav-menu.active {
+    left: 0 !important;
+  }
+  
+  /* Mobile menu toggle - ensure it's visible */
+  .mobile-menu-toggle {
+    display: block !important;
+    background: none !important;
+    border: none !important;
+    cursor: pointer !important;
+    padding: 0.5rem !important;
+    z-index: 1001 !important;
+    flex-shrink: 0 !important;
+    position: relative !important;
+  }
+  
+  /* Random Chat Button - ensure it's visible and positioned correctly */
+  .random-chat-button {
+    position: fixed !important;
+    bottom: 20px !important;
+    right: 20px !important;
+    width: 56px !important;
+    height: 56px !important;
+    border-radius: 50% !important;
+    z-index: 1000 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3) !important;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+    color: white !important;
+    border: none !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
+  }
+  
+  .random-chat-button:hover {
+    transform: scale(1.1) !important;
+  }
+}
+
 /* Base Mobile Styles (320px and up) */
 @media (max-width: 480px) {
   /* Header Navigation */
@@ -94,6 +179,56 @@
   
   .mobile-menu-toggle.active .hamburger-icon span:nth-child(3) {
     transform: rotate(-45deg) translate(7px, -6px);
+  }
+  
+  /* Ensure proper spacing between elements */
+  .header-content > * {
+    margin: 0 !important;
+  }
+  
+  /* Force header to maintain its layout */
+  header {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    z-index: 50 !important;
+    background: rgba(0, 0, 0, 0.8) !important;
+    backdrop-filter: blur(10px) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+  }
+  
+  /* Random Chat Button - Additional mobile styling */
+  .random-chat-button,
+  .floating-chat-button {
+    position: fixed !important;
+    bottom: 20px !important;
+    right: 20px !important;
+    width: 56px !important;
+    height: 56px !important;
+    border-radius: 50% !important;
+    z-index: 1000 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3) !important;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+    color: white !important;
+    border: none !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
+    font-size: 1.2rem !important;
+  }
+  
+  .random-chat-button .chat-text,
+  .floating-chat-button .chat-text {
+    display: none !important;
+  }
+  
+  .random-chat-button .chat-icon,
+  .floating-chat-button .chat-icon {
+    font-size: 1.2rem !important;
+    line-height: 1 !important;
   }
   
   /* Header content - keep horizontal layout */
